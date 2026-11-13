@@ -80,7 +80,10 @@
   "atlantisessentials": [
     "AtlantisEssentials/Enter_The_Dragon_Get_Into_This_Boat.mp3",
     "AtlantisEssentials/RickyTinesChord.aif",
-    "AtlantisEssentials/voxOh.wav"
+    "AtlantisEssentials/voxOh.wav",
+    "AtlantisEssentials/Malcolm_X_By_Any_Means_Necessary.wav",
+    "AtlantisEssentials/Malcolm_X_Vigorous_Action_Self_Defense.wav",
+    "AtlantisEssentials/Malcolm_X_Justified_By_Any_Means_Necessary.wav"
   ],
   "congas": [
     "Congas/afro-percussions-conga-low.wav",
@@ -254,5 +257,10 @@
     "Wood_Blocks/wood-rim_G_minor.wav",
     "Wood_Blocks/wooden-perc-hit_Gsharp_major.wav",
     "Wood_Blocks/xylophone.wav"
+  ],
+  "malcolmx": [
+    "AtlantisEssentials/Malcolm_X_By_Any_Means_Necessary.wav",
+    "AtlantisEssentials/Malcolm_X_Vigorous_Action_Self_Defense.wav",
+    "AtlantisEssentials/Malcolm_X_Justified_By_Any_Means_Necessary.wav"
   ]
 }
