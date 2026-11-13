@@ -1,0 +1,170 @@
+/*
+@title Atlantis – Extrude Example Two (Liquid DnB Focus)
+@by Technician P + AI
+*/
+
+// Core sample sets
+samples('https://raw.githubusercontent.com/TechnicianP/Atlantis/main/Samples/strudel.json')
+samples('github:switchangel/breaks')
+
+// Liquid DnB tempo
+setCpm(170 / 4)
+
+/////////////////////////////////////////////////
+// DRUM BUS – KEEP YOUR ORIGINAL ENERGY
+/////////////////////////////////////////////////
+
+$drums:
+  stack(
+    // solid kick with light variation
+    s("bossdr110_bd:1")
+      .beat("0,4,7?,10?,14", 16)
+      .duck("3:4:5"),
+
+    // backbeat snare
+    s("9000_sd:2")
+      .beat("4,12", 16),
+
+    // rolling hats for liquid shuffle
+    s("hh:4!16")
+  )
+  .scope()
+  .gain(0.95)
+
+
+/////////////////////////////////////////////////
+// AMEN LAYER – SMOOTH, NOT CHAOTIC
+/////////////////////////////////////////////////
+
+_$amen_smooth:
+  s("breaks/2")
+    .n(1)
+    .fit()
+    .chop(8)                 // gentle 8-slice chop
+    .scrub("<0 1 2 3 4 5 6 7>/8".seg(4))
+    .gain(0.8)
+    .orbit(2)
+
+
+/////////////////////////////////////////////////
+// LIQUID CHORDS – WARM PADS INSTEAD OF BUSY PIANO
+/////////////////////////////////////////////////
+
+// Classic liquid I–VI–III–VII in D major: Dmaj7, Bm7, F#m7, C#m7
+$chords:
+  slow(4,
+    note("<d4 fs4 a4 c5> ~ <b3 d4 fs4 a4> ~ <fs3 a3 c4 e4> ~ <cs4 e4 gs4 b4> ~")
+  )
+    .s("pad:1")
+    .gain(0.7)
+    .room(0.9)
+    .roomsize(4)
+    .attack(0.4)
+    .release(1.8)
+    .lpf(3200)
+
+
+/////////////////////////////////////////////////
+// BASS – DEEP, ROLLING LIQUID PATTERN
+/////////////////////////////////////////////////
+
+// D‑root rolling pattern that locks with the drums:
+// doom‑doom on 1, little replies late in the bar.
+$bass:
+  note(
+      // Peanut Vendor-inspired syncopated phrase (2 bars)
+      // bar 1: repeated push notes, then a descending answer
+      "e2 e2 e2 e2 e2 e2 f2 f2 e2 e2 d2 ~ d2 ~ c2 ~ ~ ~ " +
+      // bar 2: leave space, then late replies
+      "e2 ~ e2 ~ ~ ~ b1 ~ e2 ~ ~ ~ g1 ~ ~ ~"
+    )
+    .s("sine")
+    .slow(2)                 // keep the syncopation more present
+    .dec(0.5)
+    .lpf(280)
+    .gain(0.9)
+    .room(0.25)
+    .roomsize(0.25)
+    .distort(0.14)
+    .duck("3:4:5")           // sidechain feel against drums
+
+
+/////////////////////////////////////////////////
+// MELODY – LIQUID VIBRAPHONE INSPIRED BY ANGELVISION VIBES
+/////////////////////////////////////////////////
+
+// Uses the *idea* of the ANGELVISION vibes line:
+//  - short lead‑in interval
+//  - then small two‑note and triad shapes
+//  - final longer 4‑note voicing
+// but re‑voices everything around this progression:
+//   Dmaj7 (d, fs, a, c)
+//   Bm7   (b, d, fs, a)
+//   F#m7  (fs, a, c, e)
+//   C#m7  (cs, e, gs, b)
+
+$liquid_vibes:
+  slow(4,
+    note(
+      // bar 1 – Dmaj7 colour
+      "<d4 a4> [<d4 fs4>,<fs4 a4>] [d4,fs4,a4] [d4,fs4,a4,c5]@13/2 " +
+      // bar 2 – Bm7 answer
+      "<b3 fs4> [<b3 d4>,<d4 fs4>] [b3,d4,fs4] [b3,d4,fs4,a4]@13/2 " +
+      // bar 3 – F#m7 lift
+      "<fs4 c5> [<fs4 a4>,<a4 c5>] [fs4,a4,c5] [fs4,a4,c5,e5]@13/2 " +
+      // bar 4 – C#m7 resolution
+      "<cs4 gs4> [<cs4 e4>,<e4 gs4>] [cs4,e4,gs4] [cs4,e4,gs4,b4]@13/2"
+    )
+  )
+    .s("piano")
+    .gain(0.4)
+    .dec(4.0)
+    .late(.02)
+    .delay(0.22)
+    .vib(5.5)
+    .vibmod("<0.4 0>")
+    .room(0.35)
+    .dist("2:.25")
+
+
+/////////////////////////////////////////////////
+// AMBIENT / ATMOS – YOUR ORIGINAL STYLE
+/////////////////////////////////////////////////
+
+const chops = [
+  ".5@156 .5@1".color("cyan"),      // holding
+  ".5@7 .0@1".color("teal"),        // holding
+  ".16 .3 .11 .3@5".color("yellow"),// repeating
+  ".47@8 .2".color("lightblue"),    // holding
+  rand.seg(8).rib(36, .5)
+]
+
+// ambient voices – same idea as your original example
+$ambient:
+  s("ambient")
+    .scrub(pick(chops, "<0@4>"))
+    .n("6,35")               // number of voices
+    .gain(1.5)
+    .note("<c2@2 e2@2>")
+    .phaser(.8)
+    .acidenv(slider(0.434))
+    .att(1.2)
+    .rel(.9)
+    .room(1)
+    .roomsize(4)
+    ._punchcard()
+
+
+/////////////////////////////////////////////////
+// PERFORMANCE NOTES
+/////////////////////////////////////////////////
+// In Strudel, try toggling:
+//
+// - $drums + $bass      -> core rolling liquid groove
+// - + _$amen_smooth     -> more DnB authenticity, still smooth
+// - + $chords           -> warm liquid pad bed
+// - + $ambient          -> your original-style atmosphere on top
+//
+// This example keeps your drum energy but gives you a much more
+// liquid drum and bass‑style piano and a deeper, rolling bass line.
+

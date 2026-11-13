@@ -1,0 +1,178 @@
+/*
+@title Atlantis – Bongo Bukum Style
+@by Technician P + AI
+*/
+
+// Use your Atlantis samples and SwitchAngel breaks
+samples('https://raw.githubusercontent.com/TechnicianP/Atlantis/main/Samples/strudel.json')
+samples('github:switchangel/breaks')
+
+// Keep your original tempo
+setCpm(170/ 4)
+
+
+
+
+    $: s("rim:1").struct(rand.round().seg(16))
+    .rib(3,2)
+    .room(1).roomsize(2)
+    .gain(.2)
+   ._scope()
+
+
+/////////////////////////////////////////////////
+// ORIGINAL EXTRA PERCUSSION (LIGHTLY TIDIED)
+/////////////////////////////////////////////////
+
+$congas:
+  s("congas").struct(rand.round().seg(4))
+    .rib(3,2)
+    .n("2,3,4")
+    // "d2 ~ d2 ~ ~ ~ a1 ~  d2 ~ ~ ~ fs1 ~ ~ ~  d2 ~ d2 ~ ~ ~ a1 ~  d2 ~ ~ ~ g1  ~ ~ ~"
+    .gain(0.3)
+    .room(1).delay(0.6)
+    .roomsize(7)
+
+
+
+/////////////////////////////////////////////////
+// ORIGINAL DRUM BUS (UNCHANGED FEEL)
+/////////////////////////////////////////////////
+
+_$drums:
+  stack(
+    // your original kick pattern with "?" variations
+    s("bossdr110_bd:1")
+      .beat("0,7?,10", 16)
+      .duck("3:4:5"),
+
+    // your original snare hits
+    s("9000_sd:2")
+      .beat("4,12", 16),
+
+   )
+  .scope()
+  .gain(0.6)
+
+// hats on separate node so you can mix them independently
+_$hats:
+  s("mc303_hh:4!8")
+    .gain(0.3)
+    .lpf(8500)
+
+/////////////////////////////////////////////////
+// AMEN BREAK – STRAIGHT + GENTLE CHOPS
+/////////////////////////////////////////////////
+
+// a) Straight amen loop (no random scrubbing)
+_$amen_straight:
+  s("breaks/2")
+    .n(1)
+    .fit()
+    .gain(0.6)
+    .orbit(2)
+
+
+// b) Your original chopped amen, kept but on its own node
+_$amen_chopped:
+  s("breaks/2")
+    .n(1)
+    .fit()
+    // chop into 16 but play 8th-note long segments
+    .scrub(irand(16).div(16).seg(2))
+    // 10% of the time repeat 2 or 4 times
+    .almostNever(ply("2 | 4"))
+    .gain(0.9)
+    .orbit(2)
+
+
+
+/////////////////////////////////////////////////
+// AMBIENT / ATMOS LAYER (FROM YOUR ORIGINAL)
+/////////////////////////////////////////////////
+
+const chops = [
+  ".5@156 .5@1".color("cyan"),      // holding
+  ".5@7 .0@1".color("teal"),        // holding
+  ".16 .3 .11 .3@5".color("yellow"),// repeating
+  ".47@8 .2".color("lightblue"),    // holding
+  rand.seg(8).rib(36, .5)
+]
+
+// ambient voices – same idea as original, just grouped
+$ambient:
+  s("ambient")
+    .scrub(pick(chops, "<0@4>"))
+    .n("6,35")               // number of voices
+    //.n("6")               // number of voices
+    .gain(.7)
+    .note("<c2@2 e2@2>")
+    .phaser(.8)
+    .acidenv(slider(0.338))
+    .att(1.2)
+    .rel(.5)
+    .room(1)
+    .roomsize(4)
+    ._punchcard()
+
+_$: s("ambient")//.scrub(pick(chops,"<0@16 >"))
+  .scrub(pick(chops,"<0@4 >"))
+  .n(19)               // number of voices
+  .gain(0.8)
+  .note("<c2@6 e2@4>")
+  .phaser(.8)
+  .acidenv(slider(0.976))
+  .att(1.2)
+  .rel(.9)
+  .room(1)
+  .roomsize(4)
+  ._punchcard().scope()
+
+
+$bass2:
+  s("mt")
+    // 2‑bar motif: doom‑doom + two later hits
+    .note("c2 ~ c2 ~ c2 ~ ~ ~  c2 ~ ~ ~ ~ ~ ~ ~")
+    // stretch that 2‑bar phrase to last 8 bars in total
+    .slow(4)
+    .lpf(350)
+    .room(0.3)
+    .roomsize(0.3)
+
+
+////////////////////////////////////////////////
+// BASS – DEEP, ROLLING LIQUID PATTERN
+/////////////////////////////////////////////////
+
+
+// doom‑doom on 1, little replies late in the bar.
+_$bass:
+  note(
+      // Peanut Vendor-inspired syncopated phrase (2 bars)
+      // bar 1: repeated push notes, then a descending answer
+      "e2 e2 e2 e2 e2 e2 f2 f2 e2 e2 d2 ~ d2 ~ c2 ~ ~ ~ e2 ~ e2 ~ ~ ~ b1 ~ e2 ~ ~ ~ g1 ~ ~ ~"
+    )
+    .s("sine")
+    .slow(4)                 // stretch to 8 bars
+    .dec(0.5)
+    .lpf(280)
+    .gain(0.8)
+    .room(0.25)
+    .roomsize(0.25)
+    .distort(0.1)
+    .duck("3:4:5")           // sidechain feel against drums
+
+
+
+
+_$vibes:
+  note("<a3 d5> [<a3 a2>,<c4 a3>] [a3,c4,e4] [a3,c4,e4,a4]@13/2")
+    .trans(-12)
+    .s("<- gm_vibraphone>/8")
+    .gain(.4)
+    .dec(4.0)
+    .late(.02)
+    .vib(6)
+    .vibmod("<0.5 0>")
+    .room(.3)  .delay(.2)
+    .dist("2:.3")

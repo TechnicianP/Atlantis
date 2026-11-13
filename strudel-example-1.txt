@@ -1,0 +1,155 @@
+/*
+@title Atlantis – Example Four (Enhanced Original)
+@by Technician P + AI
+*/
+
+// Use your Atlantis samples and SwitchAngel breaks
+samples('https://raw.githubusercontent.com/TechnicianP/Atlantis/main/Samples/strudel.json')
+samples('github:switchangel/breaks')
+
+// Keep your original tempo
+setCpm(170 / 4)
+
+/////////////////////////////////////////////////
+// ORIGINAL DRUM BUS (UNCHANGED FEEL)
+/////////////////////////////////////////////////
+
+$drums:
+  stack(
+    // your original kick pattern with "?" variations
+    s("bossdr110_bd:1")
+      .beat("0,7?,10", 16)
+      .duck("3:4:5"),
+
+    // your original snare hits
+    s("9000_sd:2")
+      .beat("4,12", 16),
+
+    // your original hats – no extra speed added
+    s("hh:4!8")
+  )
+  .scope()
+  .gain(0.9)
+
+
+/////////////////////////////////////////////////
+// AMEN BREAK – STRAIGHT + GENTLE CHOPS
+/////////////////////////////////////////////////
+
+// a) Straight amen loop (no random scrubbing)
+_$amen_straight:
+  s("breaks/2")
+    .n(1)
+    .fit()
+    .gain(0.9)
+    .orbit(2)
+
+
+// b) Your original chopped amen, kept but on its own node
+_$amen_chopped:
+  s("breaks/2")
+    .n(1)
+    .fit()
+    // chop into 16 but play 8th-note long segments
+    .scrub(irand(16).div(16).seg(2))
+    // 10% of the time repeat 2 or 4 times
+    .almostNever(ply("2 | 4"))
+    .gain(0.9)
+    .orbit(2)
+
+
+
+
+
+/////////////////////////////////////////////////
+// ORIGINAL EXTRA PERCUSSION (LIGHTLY TIDIED)
+/////////////////////////////////////////////////
+
+_$congas:
+  s("congas")
+    .n("2,3,4")
+    .note("<c2@2 e2@2>")
+    .gain(0.5)
+    .room(2)
+    .roomsize(5)
+
+
+
+
+/////////////////////////////////////////////////
+// AMBIENT / ATMOS LAYER (FROM YOUR ORIGINAL)
+/////////////////////////////////////////////////
+
+const chops = [
+  ".5@156 .5@1".color("cyan"),      // holding
+  ".5@7 .0@1".color("teal"),        // holding
+  ".16 .3 .11 .3@5".color("yellow"),// repeating
+  ".47@8 .2".color("lightblue"),    // holding
+  rand.seg(8).rib(36, .5)
+]
+
+// ambient voices – same idea as original, just grouped
+$ambient:
+  s("ambient")
+    .scrub(pick(chops, "<0@4>"))
+    .n("6,35")               // number of voices
+    .gain(1.5)
+    .note("<c2@2 e2@2>")
+    .phaser(.8)
+    .acidenv(slider(0.434))
+    .att(1.2)
+    .rel(.9)
+    .room(1)
+    .roomsize(4)
+    ._punchcard()
+
+
+/////////////////////////////////////////////////
+// MELODY – GENTLE, SPARSE SINGLE NOTES
+/////////////////////////////////////////////////
+// Very simple liquid DnB-style line:
+// long single notes, lots of space, no big jumps.
+
+$melody:
+  slow(4,
+    note("d5 a4 ~ f5 ~ e5 ~ a4 ~")   // 4-bar phrase with rests
+  )
+    .s("piano")
+    .clip(1.1)
+    .gain(0.4)
+    .room(0.95).delay(.3)
+    .roomsize(3)
+    .lpf(2200)
+    .degradeBy(0.1)              // occasional gaps to keep it airy
+
+
+/////////////////////////////////////////////////
+// HOW TO USE THIS EXAMPLE
+/////////////////////////////////////////////////
+// In the Strudel web UI, toggle nodes on/off:
+//
+// - Always keep $drums on (your original beat).
+// - Start with _$amen_straight for a very regular DnB loop.
+// - Then try _$amen_hybrid for gentle fills.
+// - Bring in _$amen_chopped only when you want more chaos.
+// - Add $ambient, _$congas, and _$wood_blocks_main as extra flavour.
+// - Turn $bass on for a solid low end.
+//
+// This keeps your original groove and sounds, but gives you
+// cleaner control over how wild the amen becomes, plus a simple bass.
+
+/////////////////////////////////////////////////
+// BASS – SIMPLE LIQUID PATTERN (BASED ON YOUR IDEA)
+/////////////////////////////////////////////////
+// Based on your mt pattern, but with a clearer DnB pulse,
+// longer notes, and a touch of sidechain-style ducking.
+
+$bass:
+  s("mt")
+    // 2‑bar motif: doom‑doom + two later hits
+    .note("c2 ~ c2 ~ c2 ~ ~ ~  c2 ~ ~ ~ ~ ~ ~ ~")
+    // stretch that 2‑bar phrase to last 8 bars in total
+    .slow(4)
+    .lpf(350)
+    .room(0.3)
+    .roomsize(0.3)
