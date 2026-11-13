@@ -1,7 +1,7 @@
 {
   "_base": "https://raw.githubusercontent.com/TechnicianP/Atlantis/main/Samples/",
   "ambient": [
-    "Ambient/ambeint-synth-trance-pad-global-underground_136bpm_B_minor.wav",
+    "Ambient/ambient-synth-trance-pad-global-underground_136bpm_B_minor.wav",
     "Ambient/ambient-pad-alto_77bpm.wav",
     "Ambient/ambient-pad-blurred.wav",
     "Ambient/ambient-pad-spacey-tripping-loop_105bpm.wav",
@@ -177,7 +177,7 @@
     "Padz/IEC_TonalAtmos_Fm_27.m4a",
     "Padz/Murk_80_Am_Pad.m4a",
     "Padz/OM_UNIT_pad_one_shot_dream_02_Cmin.m4a",
-    "Padz/OM_UNIT_pad_one_shot_dream_02_Cmin_1.1160BPMS.wav",
+    "Padz/OM_UNIT_pad_one_shot_dream_02_Cmin_1_1160BPMS.wav",
     "Padz/OM_UNIT_pad_one_shot_dream_02_Cmin_1.wav",
     "Padz/OM_UNIT_pad_one_shot_jungle_03_Cmin.m4a",
     "Padz/OM_UNIT_pad_one_shot_jungle_03_Cmin.wav",
@@ -228,6 +228,16 @@
     "Vibraslaps/vibraslap-latin-hit.wav",
     "Vibraslaps/vibraslap-perc-grimwave.wav",
     "Vibraslaps/vintage-drum-hit-vibraslap.wav"
+  ],
+  "vinyl": [
+    "Vinyl/Bizkel_Bad_Breaks_Vol_2_Drum_Br_0006.aif",
+    "Vinyl/Funky_Drummer.m4a",
+    "Vinyl/Hot_Pants_01.wav",
+    "Vinyl/KingPinCyprus.m4a",
+    "Vinyl/Quasar_man_coda.m4a",
+    "Vinyl/Wim_Overgaauw_Without_You.mp3",
+    "Vinyl/orson_guitar_lee_yi_fang.m4a",
+    "Vinyl/patrice_feat_sol.m4a"
   ],
   "wood_blocks": [
     "Wood_Blocks/amapiano-log-drum_C_major.wav",
